@@ -1,2 +1,16 @@
-This is imdb check program which get information about serials from imdb.com.
-to be continued..
+This is imdb check program which get information about serials from imdb.com. This program has configuration file named links_db with syntax:
+--------------------links_db---------------------
+name of serial\http://link/to/episodes/list\name of file in which will info save\
+-------------------------------------------------
+Symbol "\" must be because it's delimiter for program.
+
+                              WHAT YOU NEED FOR INSTALL.
+First - this program use libcurl - so you should have headers file of this library
+Second - cmake
+
+                              HOWTO INSTALL
+1. tar xvvf source_code.tar.bz2
+2. cd source_code
+3. cmake .
+4. make
+5. make install
