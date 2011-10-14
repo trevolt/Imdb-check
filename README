@@ -13,4 +13,4 @@ Second - cmake
 2. cd source_code
 3. cmake .
 4. make
-5. make install
+5. You can copy binary file in your own location
