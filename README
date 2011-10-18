@@ -26,6 +26,16 @@ Now we want know about this serial we should type:
 
 imdb_check -s serial
 
+or
+
+imdb_check -s rial 
+
+or
+
+imdb_check -s seria
+
+you can type not full name of serial
+
 program will download info and print info, but if we want no download info (and if we have file_name in directory) just type:
 
 imdb_check -d -s serial
