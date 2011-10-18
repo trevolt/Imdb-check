@@ -1,4 +1,5 @@
-This is imdb check program which get information about serials from imdb.com. This program has configuration file named links_db with syntax:
+This is imdb check program which get information about serials from imdb.com. This program has configuration file
+named links_db with syntax:
 --------------------links_db---------------------
 name of serial\http://link/to/episodes/list\name of file in which will info save\
 -------------------------------------------------
@@ -6,7 +7,7 @@ Symbol "\" must be because it's delimiter for program.
 
                               WHAT YOU NEED FOR INSTALL.
 First - this program use libcurl - so you should have headers file of this library
-Second - cmake
+Second - cmake (need for compilation)
 
                               HOWTO INSTALL
 1. tar xvvf source_code.tar.bz2
@@ -14,6 +15,8 @@ Second - cmake
 3. cmake .
 4. make
 5. You can copy binary file in your own location
+
+Also in tarball there is compiled binary file.
 
                               HOWTO USE
 For example we have string in file links_db :
@@ -36,7 +39,8 @@ imdb_check -s seria
 
 you can type not full name of serial
 
-program will download info and print info, but if we want no download info (and if we have file_name in directory) just type:
+program will download info and print info, but if we want no download info (and if we
+have file_name in directory) just type:
 
 imdb_check -d -s serial
 
@@ -44,6 +48,6 @@ and it will use downloaded file_name, but if we need info only about season 4 of
 
 imdb_check -d -s serial -S 4
 
-and program will print info only about season 4
+and program will print info only about season 4. So for option "S" you only need nubmer of season.
 
 ENJOY!!
