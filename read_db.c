@@ -6,7 +6,10 @@ int read_db(char object, const char* name_serial, char file_name[])
 	int i=0, k=0, pos=0, pos1=0, count_tab=0, count_match=0; //pos = position of first tab, pos1 = position of 2 tab
 	FILE *l_db;
 
-	if((l_db=fopen("links_db", "r")) == NULL) {
+	strcpy(config_file,getenv("HOME"));
+	strcat(config_file, "/.links_db");
+
+	if((l_db=fopen(config_file, "r")) == NULL) {
 		perror("Error while open file or no such file");
 		exit(1);
 	}
