@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	if(serial_name == NULL)
 		print_usage(stderr, 1, argv[0]);
 
-	if(strlen(number_season) > 2) {
+	if(number_season != NULL && strlen(number_season) > 2) {
 		printf("Unknown defintion of [season] option\nYou entired: <%s>\n", number_season);
 		exit(1);
 	}
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	if(!count_match)
-		printf("\n----------------------------!!!No match found!!!----------------------------\n");
+		printf("\n----------------------------!!!No match found!!!----------------------------");
 	fclose(ep_serial);
 	return 0;
 }
