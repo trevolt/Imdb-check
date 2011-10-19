@@ -73,7 +73,6 @@ void get_string(int pos, int length, char string[], char result_string[])
 		result_string[i] = '\0';
 	}
 	massive[0]=result_string;
-	printf("result_string is %s\n0 is %s\n", result_string, massive[0]);
 }
 
 void print_usage(FILE* stream, int exit_code, const char* program_name)
