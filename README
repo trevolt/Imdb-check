@@ -50,4 +50,36 @@ imdb_check -d -s serial -S 4
 
 and program will print info only about season 4. So for option "S" you only need nubmer of season.
 
+For example i have this string in my file links_db:
+----------------------links_db------------------------------------------
+The big bang theory\http://www.imdb.com/title/tt0898266/episodes\ep_tbbt\
+------------------------------------------------------------------------
+
+so i do this:
+
+[$]› ./imdb_check -s theory -S 5
+
+	  /-------------The name of serial is The big bang theory-------------\
+
+	  --------Season----------------Date-------------------Title------------------
+	  Season 5, Episode 1	|  22 September 2011   	|  The Skank Reflex Analysis
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 2	|  22 September 2011   	|  The Infestation Hypothesis
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 3	|  29 September 2011   	|  The Pulled Groin Extrapolation
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 4	|  6 October 2011   	|  The Wiggly Finger Catalyst
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 5	|  13 October 2011   	|  The Russian Rocket Reaction
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 6	|  20 October 2011   	|  The Rhinitis Revelation
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 7	|  27 October 2011   	|  The Good Guy Fluctuation
+	  ----------------------------------------------------------------------------
+
+
+or if i have downloaded info about this serial
+
+[$]› ./imdb_check -s theory -d -S 5
+
 ENJOY!!
