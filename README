@@ -3,7 +3,7 @@ named links_db with syntax:
 --------------------links_db---------------------
 name of serial\http://link/to/episodes/list\name of file in which will info save\
 -------------------------------------------------
-Symbol "\" must be because it's separator for program. Config file should be in the same directory with binary, and other files too - it will change in the future
+Symbol "\" must be because it's separator for program. Config file should be in the your home directory and named .links_db.
 
                               WHAT YOU NEED FOR INSTALL.
 First - this program use libcurl - so you should have headers file of this library
@@ -15,36 +15,17 @@ Second - cmake (need for compilation)
 3. cmake .
 4. make
 5. You can copy binary file in your own location
+6. And you may want copy example configuration file links_db to your home directory
+$> cp links_db $HOME/.links_db
 
-Also in tarball there is compiled binary file.
 
                               HOWTO USE
-For example we have string in file links_db :
---------------------------------links_db-------------------------------
-serial\link\file_name\
------------------------------------------------------------------------
+Program will download info and print info, but if we want no download info (and if we
+have needed file which you writed in your own file .links_db) just type:
 
-programm will save all info about serial in file_name
-Now we want know about this serial we should type:
+imdb_check -d -s your_serial
 
-imdb_check -s serial
-
-or
-
-imdb_check -s rial 
-
-or
-
-imdb_check -s seria
-
-you can type not full name of serial
-
-program will download info and print info, but if we want no download info (and if we
-have file_name in directory) just type:
-
-imdb_check -d -s serial
-
-and it will use downloaded file_name, but if we need info only about season 4 of this serial then type:
+and it will use downloaded file, but if we need info only about season 4 of this serial then type:
 
 imdb_check -d -s serial -S 4
 
@@ -58,7 +39,8 @@ The big bang theory\http://www.imdb.com/title/tt0898266/episodes\ep_tbbt\
 so i do this:
 
 [$]› ./imdb_check -s theory -S 5
-
+Downloading info...
+Info downloaded
 	  /-------------The name of serial is The big bang theory-------------\
 
 	  --------Season----------------Date-------------------Title------------------
@@ -81,5 +63,25 @@ so i do this:
 or if i have downloaded info about this serial
 
 [$]› ./imdb_check -s theory -d -S 5
+
+	  /-------------The name of serial is The big bang theory-------------\
+
+	  --------Season----------------Date-------------------Title------------------
+	  Season 5, Episode 1	|  22 September 2011   	|  The Skank Reflex Analysis
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 2	|  22 September 2011   	|  The Infestation Hypothesis
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 3	|  29 September 2011   	|  The Pulled Groin Extrapolation
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 4	|  6 October 2011   	|  The Wiggly Finger Catalyst
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 5	|  13 October 2011   	|  The Russian Rocket Reaction
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 6	|  20 October 2011   	|  The Rhinitis Revelation
+	  ----------------------------------------------------------------------------
+	  Season 5, Episode 7	|  27 October 2011   	|  The Good Guy Fluctuation
+	  ----------------------------------------------------------------------------
+
+
 
 ENJOY!!
