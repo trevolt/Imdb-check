@@ -2,11 +2,11 @@
 
 int main(int argc, char *argv[])
 {
-	int i=0, pos=0, pos_e=0, next_option, no_download=0;
+	int i=0, pos=0, pos_e=0, next_option, no_download=0, count_match=0;
 	char str[LENGTH_STRING_IN_FILE], str_out[LENGTH_STRING_IN_FILE], file_name[LENGTH_OF_FILENAME], name[LENGTH_STRING_IN_FILE], link[LENGTH_STRING_IN_FILE];
 	FILE *ep_serial=NULL;
 	const char* serial_name=NULL;
-	char str_se[10]="Season ";
+	char str_se[LENGTH_STRING_IN_FILE]="Season ";
 	const char* number_season=NULL;
 	const struct option long_options[] = {
 		{ "help",	0,	NULL,	'h'},
@@ -51,8 +51,13 @@ int main(int argc, char *argv[])
 	if(serial_name == NULL)
 		print_usage(stderr, 1, argv[0]);
 
+	if(strlen(number_season) > 2) {
+		printf("Unknown defintion of [season] option\nYou entired: <%s>\n", number_season);
+		exit(1);
+	}
+
 	if(number_season != NULL)
-		strcat(str_se, number_season);
+                 strcat(str_se, number_season);
 
 	if(strlen(serial_name) <= 4) {
 		printf("\n\n----You must specify more then %d symbols in [serial] variable----\n\n", strlen(serial_name));
@@ -64,7 +69,7 @@ int main(int argc, char *argv[])
 	read_db('f', serial_name, file_name);
 
 	if(!read_db('n', serial_name, name)) {
-		printf("!!!No match found!!!\n!!!You entired: <%s>!!!\n", serial_name);
+		printf("!!!No match found by serial name!!!\nYou entired: <%s>\n", serial_name);
 		exit(1);
 	}
 	if(no_download)
@@ -90,6 +95,7 @@ int main(int argc, char *argv[])
 						printf("   \t|  ");
 						print_result(pos_e, str);
 						printf("\n----------------------------------------------------------------------------\n");
+						count_match++;
 						pos_e=0;
 						pos=0;
 					}
@@ -99,6 +105,8 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
+	if(!count_match)
+		printf("\n----------------------------!!!No match found!!!----------------------------\n");
 	fclose(ep_serial);
 	return 0;
 }

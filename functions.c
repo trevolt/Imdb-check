@@ -58,6 +58,7 @@ void print_season_episode(int pos, char str[])
 void get_string(int pos, int length, char string[], char result_string[])
 {
 	int i=0;
+	char* massive[3];
 	if(!pos) {
 		for(i=0; i < (length - pos); i++)
 			result_string[i] = string[pos + i];
@@ -71,6 +72,8 @@ void get_string(int pos, int length, char string[], char result_string[])
 				result_string[i - 2] = '\0';
 		result_string[i] = '\0';
 	}
+	massive[0]=result_string;
+	printf("result_string is %s\n0 is %s\n", result_string, massive[0]);
 }
 
 void print_usage(FILE* stream, int exit_code, const char* program_name)
