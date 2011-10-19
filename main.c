@@ -72,8 +72,13 @@ int main(int argc, char *argv[])
 		printf("!!!No match found by serial name!!!\nYou entired: <%s>\n", serial_name);
 		exit(1);
 	}
-	if(no_download)
-		ep_serial = fopen(file_name, "r");
+	if(no_download) {
+		if((ep_serial = fopen(file_name, "r"))==NULL) {
+			printf("Error while open file %s", file_name);
+			perror("");
+			exit(1);
+		}
+	}
 	else {
 		if (!get_episodes(file_name, link));
 			ep_serial = fopen(file_name, "r");
