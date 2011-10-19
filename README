@@ -3,7 +3,7 @@ named links_db with syntax:
 --------------------links_db---------------------
 name of serial\http://link/to/episodes/list\name of file in which will info save\
 -------------------------------------------------
-Symbol "\" must be because it's delimiter for program.
+Symbol "\" must be because it's separator for program. Config file should be in the same directory with binary, and other files too - it will change in the future
 
                               WHAT YOU NEED FOR INSTALL.
 First - this program use libcurl - so you should have headers file of this library
