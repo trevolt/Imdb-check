@@ -27,18 +27,18 @@ imdb_check -d -s your_serial
 
 and it will use downloaded file, but if we need info only about season 4 of this serial then type:
 
-imdb_check -d -s serial -S 4
+imdb_check -d -s your_serial -S 4
 
 and program will print info only about season 4. So for option "S" you only need nubmer of season.
 
 For example i have this string in my file links_db:
-----------------------links_db------------------------------------------
+----------------------.links_db------------------------------------------
 The big bang theory\http://www.imdb.com/title/tt0898266/episodes\ep_tbbt\
 ------------------------------------------------------------------------
 
 so i do this:
 
-[$]› ./imdb_check -s theory -S 5
+[$]› imdb_check -s theory -S 5
 Downloading info...
 Info downloaded
 	  /-------------The name of serial is The big bang theory-------------\
@@ -62,7 +62,7 @@ Info downloaded
 
 or if i have downloaded info about this serial
 
-[$]› ./imdb_check -s theory -d -S 5
+[$]› imdb_check -s theory -d -S 5
 
 	  /-------------The name of serial is The big bang theory-------------\
 
