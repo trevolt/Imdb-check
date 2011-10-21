@@ -3,7 +3,7 @@ named links_db with syntax:
 --------------------links_db---------------------
 name of serial\http://link/to/episodes/list\name of file in which will info save\
 -------------------------------------------------
-Symbol "\" must be because it's separator for program. Config file should be in the your home directory and named .links_db.
+Symbol "\" must be because it's separator for program. All configuration save in your $HOME/.imdb directory - downloaded files and configuration file - there is example configuration in this file name links_db where you can see syntaxis.
 
                               WHAT YOU NEED FOR INSTALL.
 First - this program use libcurl - so you should have headers file of this library
