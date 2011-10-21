@@ -6,13 +6,24 @@ int read_db(char object, const char* name_serial, char file_name[])
 	int i=0, k=0, pos=0, pos1=0, count_tab=0, count_match=0; //pos = position of first tab, pos1 = position of 2 tab
 	FILE *l_db;
 
-	strcpy(config_file,getenv("HOME"));
-	strcat(config_file, "/.links_db");
+	strcpy(config_file,config_directory);
+	strcat(config_file, "/links_db");
 
-	if((l_db=fopen(config_file, "r")) == NULL) {
-		perror("Error while open file or no such file");
+	if((l_db=fopen(config_file, "w")) == NULL) { //change to rw mode..
+		printf("Error while open file %s\n", config_file);
+		perror("");
 		exit(1);
 	}
+
+	fwrite(text_of_config, sizeof(char), strlen(text_of_config), l_db);
+
+	fclose(l_db);
+
+	if((l_db=fopen(config_file, "r")) == NULL) {
+                 printf("Error while open file %s\n", config_file);
+                 perror("");
+                 exit(1);
+         }
 
 	while(!feof(l_db)) {
 		if (fgets(string, LENGTH_STRING_IN_FILE - 1, l_db)) { //last symbol is \0
@@ -49,5 +60,6 @@ int read_db(char object, const char* name_serial, char file_name[])
 				string[i] = '\0';
 		}
 	}
+	fclose(l_db);
 	return count_match;
 }
