@@ -3,7 +3,7 @@ named links_db with syntax:
 --------------------links_db---------------------
 name of serial\http://link/to/episodes/list\name of file in which will info save\
 -------------------------------------------------
-Symbol "\" must be because it's separator for program. All configuration save in your $HOME/.imdb directory - downloaded files and configuration file - there is example configuration in this file name links_db where you can see syntax.
+Symbol "\" must be because it's separator for program. All configuration and downloaded files save in your $HOME/.imdb directory - there is example of configuration file in this directory named links_db where you can see syntax.
 
                               WHAT YOU NEED FOR INSTALL.
 First - this program use libcurl - so you should have headers file of this library
@@ -15,9 +15,6 @@ Second - cmake (need for compilation)
 3. cmake .
 4. make
 5. You can copy binary file in your own location
-6. And you may want copy example configuration file links_db to your home directory
-$> cp links_db $HOME/.links_db
-
 
                               HOWTO USE
 Program will download info and print info, but if we want no download info (and if we
