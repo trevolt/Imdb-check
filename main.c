@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
 	FILE *ep_serial=NULL;
 	const char* serial_name=NULL;
 	char str_se[LENGTH_STRING_IN_FILE]="Season ";
+	struct stat st;
 	const char* number_season=NULL;
 	const struct option long_options[] = {
 		{ "help",	0,	NULL,	'h'},
@@ -48,6 +49,11 @@ int main(int argc, char *argv[])
 	}
 	while (next_option != -1);
 
+	strcpy(config_directory, getenv("HOME")); //copy variable HOME
+	strcat(config_directory, "/.imdb"); //added /.imdb to this variable
+	if(stat(config_directory, &st)) //checking for existence of our configuration directory
+		mkdir(config_directory, 0777);
+
 	if(serial_name == NULL)
 		print_usage(stderr, 1, argv[0]);
 
@@ -67,21 +73,25 @@ int main(int argc, char *argv[])
 	read_db('l', serial_name, link);
 	read_db('n', serial_name, name);
 	read_db('f', serial_name, file_name);
+	strcpy(working_file, config_directory);
+	strcat(working_file, "/");
+	strcat(working_file, file_name);
 
 	if(!read_db('n', serial_name, name)) {
 		printf("!!!No match found by serial name!!!\nYou entired: <%s>\n", serial_name);
 		exit(1);
 	}
+
 	if(no_download) {
-		if((ep_serial = fopen(file_name, "r"))==NULL) {
+		if((ep_serial = fopen(working_file, "r"))==NULL) {
 			printf("Error while open file %s", file_name);
 			perror("");
 			exit(1);
 		}
 	}
 	else {
-		if (!get_episodes(file_name, link));
-			ep_serial = fopen(file_name, "r");
+		if (!get_episodes(working_file, link));
+			ep_serial = fopen(working_file, "r");
 	}
 
 
