@@ -31,6 +31,12 @@ And if you want only download files for update them - you can use -o option:
 
 imdb_check -o
 
+This option will be read first everytime if you type for example:
+
+imdb_check -s your_serial -d -S 4 -o
+
+program will only download file and reset other options
+
 For example i have this string in my file links_db:
 ----------------------.links_db------------------------------------------
 The big bang theory\http://www.imdb.com/title/tt0898266/episodes\ep_tbbt\
