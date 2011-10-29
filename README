@@ -27,6 +27,9 @@ and it will use downloaded file, but if we need info only about season 4 of this
 imdb_check -d -s your_serial -S 4
 
 and program will print info only about season 4. So for option "S" you only need nubmer of season.
+And if you want only download files for update them - you can use -o option:
+
+imdb_check -o
 
 For example i have this string in my file links_db:
 ----------------------.links_db------------------------------------------
