@@ -7,11 +7,12 @@ size_t write_data( void *ptr, size_t size, size_t nmeb, void *stream)
  
 int get_episodes(char* DESTINATION_FILE, char* WEBPAGE_URL)
 {
-	printf("Downloading info...\n");
+	printf("Downloading info...\nDestination file is %s\n", DESTINATION_FILE);
 	 FILE * file = fopen(DESTINATION_FILE,"w+");
 	  if(!file){
-		   perror("File Open:");
-		    exit(0);
+		  printf("Error while open file %s\n", DESTINATION_FILE);
+		   perror("");
+		    exit(1);
 		     }
     CURL *handle = curl_easy_init();
     curl_easy_setopt(handle,CURLOPT_URL,WEBPAGE_URL); /*Using the http protocol*/
@@ -19,6 +20,6 @@ int get_episodes(char* DESTINATION_FILE, char* WEBPAGE_URL)
     curl_easy_setopt(handle,CURLOPT_WRITEDATA, file);
     curl_easy_perform(handle);
     curl_easy_cleanup(handle);
-    printf("Info downloaded");
+    printf("Info downloaded\n");
     return 0;
 }
