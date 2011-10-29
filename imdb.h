@@ -4,6 +4,7 @@
 #include <getopt.h>
 #include <curl/curl.h>
 #include <sys/stat.h>
+#include <ctype.h>
 #define str_s "Original Air Date"
 #define LENGTH_STRING_IN_FILE 500
 #define LENGTH_OF_FILENAME 50
@@ -25,4 +26,6 @@ void get_string(int pos, int pos1, char string[], char result_string[]); //this 
 
 void print_usage(FILE* stream, int exid_code, const char* program_name); //prints usage information
 
-int get_episodes(char* DESTINATION_FILE, char* WEBPAGE_URL);
+int get_episodes(char* DESTINATION_FILE, char* WEBPAGE_URL); //function for downloading info
+
+void download_all_files(void); //function for downloading all files for refreshing them
