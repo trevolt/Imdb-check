@@ -1,25 +1,25 @@
 #include "imdb.h"
 
-int copy_check(int k, char from[], char to[], int length, const char* str_search)
+int copy_check(int k, char from[], char to[], int length, const char* str_search) //we can change this function for strstr(string_in_search, string_search)
 {
 	int i, h;
 	i = h = 0;
 	while (i != length) {
 		to[i] = from[k + i];
-		++i;
+		i++;
 	}
 	to[i] = '\0';
 	i = 0;
         while (i < length) {
 
                 if (to[i] == str_search[i])
-                        ++h;
+                        h++;
 
-                        ++i;
+                        i++;
         }
         if (h == length)
         return k;
-        else return 0;
+        else return -1;
 }
 
 void print_result(int pos, char str[])
@@ -58,7 +58,6 @@ void print_season_episode(int pos, char str[])
 void get_string(int pos, int length, char string[], char result_string[])
 {
 	int i=0;
-	char* massive[3];
 	if(!pos) {
 		for(i=0; i < (length - pos); i++)
 			result_string[i] = string[pos + i];
@@ -72,7 +71,6 @@ void get_string(int pos, int length, char string[], char result_string[])
 				result_string[i - 2] = '\0';
 		result_string[i] = '\0';
 	}
-	massive[0]=result_string;
 }
 
 void print_usage(FILE* stream, int exit_code, const char* program_name)
@@ -82,6 +80,47 @@ void print_usage(FILE* stream, int exit_code, const char* program_name)
 			"  -h  --help					Display this usage information.\n"
 			"  -s  --serial [name of serial]   		Print information about [name of serial].\n"
 			"  -d  --no-download				Do not download information from site (if you have downloaded needed files)\n"
-			"  -S  --season [season...]			If you know what season info you need you can use this option\n");
+			"  -S  --season [season...]			If you know what season info you need you can use this option\n"
+			"  -o  --only-refresh				Only download all files from config - refreshing them\n");
 	exit (exit_code);
+}
+
+void download_all_files(void)
+{
+	//for start i need to read data base for file names....
+	char name[LENGTH_STRING_IN_FILE], string[LENGTH_STRING_IN_FILE], file_name[LENGTH_OF_FILENAME], link[LENGTH_STRING_IN_FILE], destination_file[LENGTH_STRING_IN_FILE];
+	int i=0;
+	FILE* l_db;
+
+	if ((l_db = fopen(config_file, "r")) == NULL) {
+			printf("Error while open %s\n", config_file);
+			perror("");
+			}
+
+	while(!feof(l_db)) {
+                 if (fgets(string, LENGTH_STRING_IN_FILE - 1, l_db)) {
+			 while (string[i] != '\\') {
+				 name[i] = string[i];
+				 i++;
+			 }
+			 name[i]  = '\0';
+			 
+
+		 if(read_db('f', name, file_name)) {
+			 read_db('l', name, link);
+			 strcpy(destination_file, working_file);
+			 strcat(destination_file, file_name);
+		 }
+
+		 if (get_episodes(destination_file, link))
+			 printf("No connection ?\n");
+
+		 for (i=0; i<= strlen(destination_file); i++) //nulling our massive, it's because more than one file_name, for non add other file_name to string
+		 destination_file[i] = '\0';
+
+
+		 i=0;
+		 	}
+		 }
+	fclose (l_db);
 }
