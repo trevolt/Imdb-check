@@ -6,19 +6,6 @@ int read_db(char object, const char* name_serial, char file_name[])
 	int i=0, k=0, pos=0, pos1=0, count_tab=0, count_match=0; //pos = position of first tab, pos1 = position of 2 tab
 	FILE *l_db;
 
-	strcpy(config_file,config_directory);
-	strcat(config_file, "/links_db");
-
-	if((l_db=fopen(config_file, "w")) == NULL) { //change to rw mode..
-		printf("Error while open file %s\n", config_file);
-		perror("");
-		exit(1);
-	}
-
-	fwrite(text_of_config, sizeof(char), strlen(text_of_config), l_db);
-
-	fclose(l_db);
-
 	if((l_db=fopen(config_file, "r")) == NULL) {
                  printf("Error while open file %s\n", config_file);
                  perror("");
@@ -39,7 +26,9 @@ int read_db(char object, const char* name_serial, char file_name[])
 			i=0;
 			while(string[i] != '\\') {
 				if(pos && string[i] != '\0' && pos1) {
-					if(copy_check(i, string, string_cp, strlen(name_serial), name_serial)) {
+
+					if(copy_check(i, string, string_cp, strlen(name_serial), name_serial) != -1) {
+
 						if(object == 'l') // if we have to print link let's do it
 							get_string(pos, pos1, string, file_name);
 						else if(object == 'n') //in other case we print name of serial
