@@ -1,4 +1,4 @@
-This is imdb check program which get information about serials from imdb.com. This program has configuration file
+This is imdb check program - it can get information about serials from imdb.com. This program has configuration file
 named links_db with syntax:
 --------------------links_db---------------------
 name of serial\http://link/to/episodes/list\name of file in which will info save\
@@ -17,8 +17,8 @@ Second - cmake (need for compilation)
 5. You can copy binary file in your own location
 
                               HOWTO USE
-Program will download info and print info, but if we want no download info (and if we
-have needed file which you writed in your own file .links_db) just type:
+Program will download info and print it, but if we want no download it (and if we
+have needed file which you writed in your own file links_db) just type:
 
 imdb_check -d -s your_serial
 
@@ -35,7 +35,7 @@ This option will be read first everytime if you type for example:
 
 imdb_check -s your_serial -d -S 4 -o
 
-program will only download file and reset other options
+program will only download files and reset other options.
 
 For example i have this string in my file links_db:
 ----------------------.links_db------------------------------------------
