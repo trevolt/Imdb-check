@@ -19,7 +19,7 @@ int copy_check(int k, char from[], char to[], int length, const char* str_search
         }
         if (h == length)
         return k;
-        else return -1;
+        else return -1; //it's for check first symbol
 }
 
 void print_result(int pos, char str[])
@@ -49,7 +49,7 @@ void print_season_episode(int pos, char str[])
 {
 	int i;
 	i=pos;
-	while(str[i] != ':') {
+	while(str[i] != '<') { //before was : - it's because exactly print what we need
 		printf("%c", str[i]);
 		i++;
 	}
@@ -75,20 +75,25 @@ void get_string(int pos, int length, char string[], char result_string[])
 
 void print_usage(FILE* stream, int exit_code, const char* program_name)
 {
-	fprintf(stream, "\nUsage: %s options [name of serial...]\n", program_name);
+	fprintf(stream, "\nUsage: %s [option 1] [value of option 1] [option 2] [value of option 2]...\n", program_name);
 	fprintf(stream,
 			"  -h  --help					Display this usage information.\n"
 			"  -s  --serial [name of serial]   		Print information about [name of serial].\n"
-			"  -d  --no-download				Do not download information from site (if you have downloaded needed files)\n"
-			"  -S  --season [season...]			If you know what season info you need you can use this option\n"
-			"  -o  --only-refresh				Only download all files from config - refreshing them\n");
+			"  -d  --no-download				Do not download information from site (if you have\n"
+			"						downloaded needed files).\n"
+			"  -S  --season [number of season]		If you know what season info you need you can use\n"
+			"						this option.\n"
+			"  -u  --update					Only download all files from config file to update them.\n"
+			"  -e  --episode [number of episode]		Use this option if you need info only about\n"
+			"						episode [episode], using only with [season] option.\n"
+			"  -D  --date					Print only date of episode, using only with [season] [episode] option\n");
 	exit (exit_code);
 }
 
 void download_all_files(void)
 {
 	//for start i need to read data base for file names....
-	char name[LENGTH_STRING_IN_FILE], string[LENGTH_STRING_IN_FILE], file_name[LENGTH_OF_FILENAME], link[LENGTH_STRING_IN_FILE], destination_file[LENGTH_STRING_IN_FILE];
+	char string[LENGTH_STRING_IN_FILE], file_name[LENGTH_OF_FILENAME], link[LENGTH_STRING_IN_FILE], destination_file[LENGTH_STRING_IN_FILE];
 	int i=0;
 	FILE* l_db;
 
@@ -100,14 +105,14 @@ void download_all_files(void)
 	while(!feof(l_db)) {
                  if (fgets(string, LENGTH_STRING_IN_FILE - 1, l_db)) {
 			 while (string[i] != '\\') {
-				 name[i] = string[i];
+				 serial_name[i] = string[i];
 				 i++;
 			 }
-			 name[i]  = '\0';
+			 serial_name[i]  = '\0';
 			 
 
-		 if(read_db('f', name, file_name)) {
-			 read_db('l', name, link);
+		 if(read_db('f', file_name)) {
+			 read_db('l', link);
 			 strcpy(destination_file, working_file);
 			 strcat(destination_file, file_name);
 		 }
