@@ -2,22 +2,24 @@
 
 int main(int argc, char *argv[])
 {
-	int i=0, pos=0, pos_e=0, next_option, no_download=0, count_match=0, only_refresh=0;
+	int i=0, pos=0, pos_e=0, next_option, no_download=0, count_match=0, only_refresh=0, print_only_date=0;
 	char str[LENGTH_STRING_IN_FILE], str_out[LENGTH_STRING_IN_FILE], file_name[LENGTH_OF_FILENAME], name[LENGTH_STRING_IN_FILE], link[LENGTH_STRING_IN_FILE];
 	FILE *ep_serial=NULL, *l_db; //this should be in imdb.h ldb
-	const char* serial_name=NULL;
 	char str_se[LENGTH_STRING_IN_FILE]="Season ";
 	struct stat st;
 	const char* number_season=NULL;
+	const char* episode=NULL;
 	const struct option long_options[] = {
 		{ "help",	0,	NULL,	'h'},
 		{ "serial",	1,	NULL,	's'},
 		{ "no-download",0,	NULL,	'd'},
 		{ "season",	1,	NULL,	'S'},
-		{ "only-refresh",	0,	NULL,	'o'},
-		{ NULL,		0,	NULL,	0}
+		{ "update",	0,	NULL,	'u'},
+		{ "episode",	1,	NULL,	'e'},
+		{ "date",	0,	NULL,	'D'},
+		{ NULL,		0,	NULL,	 0 }
 	};
-	const char* const short_options = "hs:dS:o";
+	const char* const short_options = "hs:dS:ue:D";
 
 	do {
 		next_option = getopt_long(argc, argv, short_options, long_options, NULL);
@@ -27,7 +29,12 @@ int main(int argc, char *argv[])
 				print_usage (stdout, 0, argv[0]);
 
 			case 's':  /* -s --serial*/
-				serial_name = optarg;
+				if(strlen(optarg) < 500)
+				strcpy(serial_name, optarg);
+				else {
+					printf("\nUnknown defintion of [serial] option\nYou entired: <%s>\n", optarg);
+					exit (1);
+				}
 				break;
 
 			case 'd': //-d for no download
@@ -38,14 +45,22 @@ int main(int argc, char *argv[])
 				number_season = optarg;
 				break;
 
-			case 'o': //for refresh option
+			case 'u': //for refresh option
 				only_refresh=1;
+				break;
+
+			case 'e': //for only episode print
+				episode=optarg;
+				break;
+			case 'D': //for print only date of needed episode
+				print_only_date=1;
 				break;
 
 			case '?': /*uknowkn option*/
 				print_usage (stderr, 1, argv[0]);
 
 			case -1: /*no options*/
+				print_usage (stderr, 1, argv[0]);
 				break;
 
 			default: //unknokwn result
@@ -69,12 +84,14 @@ int main(int argc, char *argv[])
 		if ((l_db = fopen(config_file, "w")) == NULL) {
 			printf("Error while open file %s\n", config_file);
 			perror("");
+			exit (1);
 		}
 		if (fwrite(text_of_config, sizeof(char), strlen(text_of_config), l_db) < strlen(text_of_config)) {
 			printf("Error while writing to file %s\n", config_file);
 			perror("");
+			exit (1);
 		}
-		fclose (l_db);
+		fclose (l_db); //replace this to read_db function
 	}
 
 	if (only_refresh) { //change all if to case
@@ -82,29 +99,41 @@ int main(int argc, char *argv[])
 		exit (0);
 	}
 
-	if(serial_name == NULL)
-		print_usage(stderr, 1, argv[0]);
-
 	if(number_season != NULL && strlen(number_season) > 2) {
-		printf("Unknown defintion of [season] option\nYou entired: <%s>\n", number_season);
+		printf("\nUnknown defintion of [season] option\nYou entired: <%s>\n", number_season);
 		exit(1);
 	}
 
 	if(number_season != NULL)
                  strcat(str_se, number_season);
 
+	if(episode != NULL && number_season != NULL && strlen(episode) < 4) {
+		strcat(str_se, ", Episode ");
+		strcat(str_se, episode);
+		strcat(str_se, ":");
+	} else if (number_season == NULL && episode != NULL) {
+		printf("\n---You should define [episode] option with [season]---\n");
+		exit (1);
+	} else if (number_season != NULL && episode !=NULL && strlen(episode) > 4) {
+		printf("\nUnknown definition of [episode] option\nYou entired: <%s>\n", episode);
+		exit (1);
+	} else if ((episode == NULL || number_season == NULL) && print_only_date) {
+		printf("\n---You should define [season] and [episode] for use option [date]---\n");
+		exit (1);
+	}
+
 	if(strlen(serial_name) <= 4) {
 		printf("\n\n----You must specify more then %d symbols in [serial] variable----\n\n", strlen(serial_name));
 		exit(1);
 	}
 
-	if(!read_db('n', serial_name, name)) {
+	if(!read_db('n', name)) {
 		printf("!!!No match found by serial name!!!\nYou entired: <%s>\n", serial_name);
 		exit(1);
 	} else {
-		read_db('l', serial_name, link);
-		read_db('n', serial_name, name);
-		read_db('f', serial_name, file_name);
+		read_db('l', link);
+		//read_db('n', name);
+		read_db('f', file_name);
 		strcat(working_file, file_name);
 	}
 
@@ -126,18 +155,25 @@ int main(int argc, char *argv[])
 	while(!feof(ep_serial)) {
 		if(fgets(str, LENGTH_STRING_IN_FILE - 1, ep_serial)) {
 			if(!i) {
-				printf("\n\t  /-------------The name of serial is %s-------------\\\n\n", name);
-				printf("--------Season----------------Date-------------------Title------------------\n");
+				if (print_only_date);
+				else {
+					printf("\n\t  /-------------The name of serial is %s-------------\\\n\n", name);
+					printf("--------Season----------------Date-------------------Title------------------\n");
+				}
 			}
 			for(i=0; i<= strlen(str); i++) {
 					if(copy_check(i, str, str_out, strlen(str_s), str_s) != -1 && pos_e) {
 						pos=copy_check(i, str, str_out, strlen(str_s), str_s);
-						print_season_episode(pos_e, str);
-						printf("\t|  ");
-						print_result(pos, str);
-						printf("   \t|  ");
-						print_result(pos_e, str);
-						printf("\n----------------------------------------------------------------------------\n");
+						if (print_only_date)
+							print_result(pos, str);
+						else {
+							print_season_episode(pos_e, str);
+							printf("\t|  ");
+							print_result(pos, str);
+							printf("   \t|  ");
+							print_result(pos_e, str);
+							printf("\n----------------------------------------------------------------------------\n");
+							}
 						count_match++;
 						pos_e=0;
 						pos=0;
@@ -149,7 +185,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	if(!count_match)
-		printf("\n----------------------------!!!No match found!!!----------------------------");
+		printf("\n----------------------------!!!No match found!!!----------------------------\n");
 	fclose(ep_serial);
 	return 0;
 }
