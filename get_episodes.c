@@ -7,7 +7,7 @@ size_t write_data( void *ptr, size_t size, size_t nmeb, void *stream)
  
 int get_episodes(char* DESTINATION_FILE, char* WEBPAGE_URL)
 {
-	printf("Downloading info...\nDestination file is %s\n", DESTINATION_FILE);
+	printf("Downloading - %s\n", DESTINATION_FILE);
 	 FILE * file = fopen(DESTINATION_FILE,"w+");
 	  if(!file){
 		  printf("Error while open file %s\n", DESTINATION_FILE);
