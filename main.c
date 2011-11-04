@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 				print_usage (stdout, 0, argv[0]);
 
 			case 's':  /* -s --serial*/
-				if(strlen(optarg) < 500)
+				if(strlen(optarg) < LENGTH_STRING_IN_FILE)
 				strcpy(serial_name, optarg);
 				else {
 					printf("\nUnknown defintion of [serial] option\nYou entired: <%s>\n", optarg);
@@ -60,7 +60,6 @@ int main(int argc, char *argv[])
 				print_usage (stderr, 1, argv[0]);
 
 			case -1: /*no options*/
-				print_usage (stderr, 1, argv[0]);
 				break;
 
 			default: //unknokwn result
@@ -94,6 +93,9 @@ int main(int argc, char *argv[])
 		fclose (l_db); //replace this to read_db function
 	}
 
+	if (argc == 1) {
+		print_usage (stderr, 1, argv[0]);
+	}
 	if (only_refresh) { //change all if to case
 		download_all_files();
 		exit (0);
