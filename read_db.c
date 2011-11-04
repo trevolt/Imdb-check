@@ -1,6 +1,6 @@
 #include "imdb.h"
 
-int read_db(char object, const char* name_serial, char file_name[])
+int read_db(char object, char file_name[])
 {
 	char string[LENGTH_STRING_IN_FILE], string_cp[LENGTH_STRING_IN_FILE];
 	int i=0, k=0, pos=0, pos1=0, count_tab=0, count_match=0; //pos = position of first tab, pos1 = position of 2 tab
@@ -27,7 +27,7 @@ int read_db(char object, const char* name_serial, char file_name[])
 			while(string[i] != '\\') {
 				if(pos && string[i] != '\0' && pos1) {
 
-					if(copy_check(i, string, string_cp, strlen(name_serial), name_serial) != -1) {
+					if(copy_check(i, string, string_cp, strlen(serial_name), serial_name) != -1) {
 
 						if(object == 'l') // if we have to print link let's do it
 							get_string(pos, pos1, string, file_name);
