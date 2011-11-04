@@ -27,15 +27,17 @@ and it will use downloaded file, but if we need info only about season 4 of this
 imdb_check -d -s your_serial -S 4
 
 and program will print info only about season 4. So for option "S" you only need nubmer of season.
-And if you want only download files for update them - you can use -o option:
+And if you want only download files for update them - you can use -u option:
 
-imdb_check -o
+imdb_check -u
 
 This option will be read first everytime if you type for example:
 
-imdb_check -s your_serial -d -S 4 -o
+imdb_check -s your_serial -d -S 4 -u
 
-program will only download files and reset other options.
+program will only download files and will ignore other options.
+
+Also i added options for episodes filtering.
 
 For example i have this string in my file links_db:
 ----------------------.links_db------------------------------------------
@@ -66,7 +68,7 @@ Info downloaded
 	  ----------------------------------------------------------------------------
 
 
-or if i have downloaded info about this serial
+or if i have downloaded info about this serial:
 
 [$]› imdb_check -s theory -d -S 5
 
@@ -88,6 +90,22 @@ or if i have downloaded info about this serial
 	  Season 5, Episode 7	|  27 October 2011   	|  The Good Guy Fluctuation
 	  ----------------------------------------------------------------------------
 
+or if i want to print only info about episode 7:
 
+[$]› imdb_check -s theory -d -S 5 -e 7
+
+	  /-------------The name of serial is The big bang theory-------------\
+
+	  --------Season----------------Date-------------------Title------------------
+	  Season 5, Episode 7: 	|  27 October 2011   	|  The Good Guy Fluctuation
+	  ----------------------------------------------------------------------------
+
+
+or i can just print only date:
+
+[$]› imdb_check -s theory -d -S 5 -e 7 -D
+27 October 2011
+
+It's useful option for scripts.
 
 ENJOY!!
